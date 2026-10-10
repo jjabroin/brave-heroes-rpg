@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
+  <ellipse cx="80" cy="100" rx="48" ry="44" fill="#b28dff" stroke="#2b2b3a" stroke-width="6"/>
+  <polygon points="48,62 38,28 66,46" fill="#b28dff" stroke="#2b2b3a" stroke-width="5" stroke-linejoin="round"/>
+  <polygon points="112,62 122,28 94,46" fill="#b28dff" stroke="#2b2b3a" stroke-width="5" stroke-linejoin="round"/>
+  <circle cx="62" cy="94" r="9" fill="#fff" stroke="#2b2b3a" stroke-width="4"/>
+  <circle cx="98" cy="94" r="9" fill="#fff" stroke="#2b2b3a" stroke-width="4"/>
+  <circle cx="63" cy="96" r="4" fill="#e5383b"/>
+  <circle cx="99" cy="96" r="4" fill="#e5383b"/>
+  <path d="M64 114 Q80 124 96 114" stroke="#2b2b3a" stroke-width="4" fill="none"/>
+  <path d="M70 116 L74 122 L78 116 L82 122 L86 116" fill="#fff" stroke="#2b2b3a" stroke-width="2"/>
+  <rect x="104" y="86" width="34" height="10" rx="5" fill="#8a5a2b" stroke="#2b2b3a" stroke-width="4" transform="rotate(24 104 86)"/>
+  <circle cx="136" cy="100" r="7" fill="#5dbb5d" stroke="#2b2b3a" stroke-width="3"/>
+  <polygon points="136,93 139,98 144,98 140,101 141,106 136,103 131,106 132,101 128,98 133,98" fill="#fff"/>
+</svg>

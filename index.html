@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>브레이브 히어로즈 RPG — 오리지널 턴제 배틀</title>
+<meta name="description" content="새 영웅 파티 vs 섀도우 몬스터! 오리지널 턴제 RPG 웹 게임" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="icon" href="assets/images/hero-ember.svg" type="image/svg+xml" />
+</head>
+<body>
+<div id="rotate-hint">📱 가로 모드로 돌리면 더 재밌어요! (세로에서도 플레이 가능)</div>
+<div id="app">
+  <header id="topbar">
+    <div class="logo">🛡️ 브레이브 히어로즈</div>
+    <div class="top-actions">
+      <button id="btn-mute" class="icon-btn" aria-label="음소거">🔊</button>
+      <button id="btn-home" class="icon-btn" aria-label="홈">🏠</button>
+      <button id="btn-reset-save" class="icon-btn" aria-label="기록 초기화" title="진행도 초기화">🗑️</button>
+    </div>
+  </header>
+
+  <!-- 타이틀 화면 -->
+  <section id="screen-title" class="screen active">
+    <div class="title-hero">
+      <div class="title-party">
+        <img src="assets/images/hero-ember.svg" alt="루비" />
+        <img src="assets/images/hero-marina.svg" alt="마리나" />
+        <img src="assets/images/hero-leaf.svg" alt="리프" />
+      </div>
+      <h1>브레이브 히어로즈 RPG</h1>
+      <p class="subtitle">루미아 대륙을 노리는 섀도우 군단 vs 수호대 3인방!</p>
+      <p class="desc">⚔️ 턴제 배틀 + 🎯 타이밍 미니게임으로 데미지 보너스!<br />완전 오리지널 캐릭터·세계관 (팬메이드 오마주, 무단 도용 없음)</p>
+      <div class="title-buttons">
+        <button id="btn-start" class="big-btn primary">▶ 게임 시작</button>
+        <button id="btn-howto" class="big-btn secondary">❓遊び方 / 방법</button>
+      </div>
+      <div id="howto-box" class="howto hidden">
+        <h3>📖 플레이 방법</h3>
+        <ol>
+          <li>스테이지 선택 → 아군 3명이 순서대로 행동</li>
+          <li>영웅 → 스킬 → 타겟(적/아군) 선택</li>
+          <li><b>타이밍 바</b>가 중앙에 멈추면 <b>PERFECT 1.5배!</b> (터치/클릭/스페이스)</li>
+          <li>적 턴 자동 진행 → 전멸시키면 승리!</li>
+          <li>루비(단일 강공) / 마리나(힐) / 리프(전체 광역)를 조합하세요</li>
+        </ol>
+        <p class="tip">💾 진행도는 브라우저(localStorage)에 자동 저장됩니다.</p>
+      </div>
+      <div class="title-enemies">
+        <img src="assets/images/enemy-slime.svg" alt="슬라임" />
+        <img src="assets/images/enemy-goblin.svg" alt="고블린" />
+        <img src="assets/images/enemy-golem.svg" alt="골렘" />
+        <img src="assets/images/enemy-dragon.svg" alt="드래곤" />
+      </div>
+    </div>
+  </section>
+
+  <!-- 스테이지 선택 -->
+  <section id="screen-stages" class="screen">
+    <h2>🌍 스테이지 선택</h2>
+    <p class="stage-progress" id="stage-progress"></p>
+    <div id="stage-list" class="stage-list"></div>
+    <button id="btn-back-title" class="big-btn secondary">◀ 타이틀로</button>
+  </section>
+
+  <!-- 배틀 화면 -->
+  <section id="screen-battle" class="screen">
+    <div id="stage-banner" class="stage-banner"></div>
+    <div id="battlefield">
+      <div id="party-side" class="side">
+        <h3 class="side-title">✨ 수호대</h3>
+        <div id="party-slots" class="slots"></div>
+      </div>
+      <div id="vs-badge">VS</div>
+      <div id="enemy-side" class="side">
+        <h3 class="side-title">👾 섀도우 군단</h3>
+        <div id="enemy-slots" class="slots"></div>
+      </div>
+    </div>
+    <div id="fx-layer"></div>
+    <div id="action-bar">
+      <div id="turn-info">준비 중…</div>
+      <div id="skill-buttons"></div>
+      <div id="battle-log" aria-live="polite"></div>
+    </div>
+  </section>
+</div>
+
+<!-- 타이밍 미니게임 오버레이 -->
+<div id="timing-overlay" class="hidden">
+  <div id="timing-box">
+    <h3>🎯 타이밍 찬스!</h3>
+    <p>바늘이 <b class="gold">GOLD</b> 중앙에 올 때 터치!</p>
+    <div id="timing-bar">
+      <div id="timing-zone-good"></div>
+      <div id="timing-zone-perfect"></div>
+      <div id="timing-needle"></div>
+    </div>
+    <div id="timing-label">PERFECT ×1.5 / GOOD ×1.2 / MISS ×0.7</div>
+    <button id="timing-hit" class="big-btn primary">⚡ 지금 때려!</button>
+  </div>
+</div>
+
+<!-- 결과 모달 -->
+<div id="result-modal" class="hidden">
+  <div id="result-box">
+    <h2 id="result-title"></h2>
+    <p id="result-desc"></p>
+    <div id="result-stars"></div>
+    <div class="result-buttons">
+      <button id="btn-retry" class="big-btn primary">🔄 다시 싸우기</button>
+      <button id="btn-next" class="big-btn secondary">▶ 다음 스테이지</button>
+      <button id="btn-to-stages" class="big-btn secondary">🌍 스테이지로</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="hidden"></div>
+
+<script src="js/storage.js"></script>
+<script src="js/characters.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/minigame.js"></script>
+<script src="js/battle.js"></script>
+<script src="js/scenes.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
